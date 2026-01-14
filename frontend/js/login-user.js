@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
         showMessage(data.message || 'Login failed', 'error');
       }
     } catch (error) {
-      console.error('Login Error:', error);
-      showMessage('Connection failed. Please check your internet or try again.', 'error');
+      console.error('Login Fetch Error:', error);
+      showMessage('Server connection failed. If on Render, the server might be waking up (wait 30s).', 'error');
     }
   });
   }
@@ -177,7 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 3. GOOGLE OAUTH REDIRECT ---
   // Updated: Select by ID, Class, or Href to ensure we catch the button on all pages
-  const googleBtns = document.querySelectorAll('#btn-google, .google-btn, a[href*="/auth/google"]');
+  // We also look for any link containing 'google' to be extra safe against hardcoded localhost links
+  const googleBtns = document.querySelectorAll('#btn-google, .google-btn, a[href*="/auth/google"], a[href*="google"]');
   
   googleBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {

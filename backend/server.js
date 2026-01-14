@@ -196,6 +196,13 @@ app.get('/auth/google', (req, res, next) => {
         console.error('Invalid GOOGLE_CALLBACK_URL format:', cb);
         return res.redirect('/pages/login-admin.html?error=oauth_callback_invalid');
     }
+
+    // Safety Check: Ensure Passport has the 'google' strategy registered
+    // This prevents the server from crashing if GOOGLE_CLIENT_ID was missing at startup
+    if (!passport._strategies || !passport._strategies.google) {
+        console.error("❌ Google Strategy not registered. Check GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in Render Environment.");
+        return res.redirect('/pages/login-admin.html?error=oauth_not_configured');
+    }
     
     const origin = req.query.origin || 'home';
     passport.authenticate('google', { 

@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 const app = express();
+app.set('trust proxy', 1); // Trust Render's proxy for secure cookies and protocol detection
 const PORT = process.env.PORT || 3000;
 const BASE_URL = (process.env.NODE_ENV === 'production' || process.env.RENDER_SERVICE_ID)
   ? 'https://eventify-3iu8.onrender.com' 
@@ -73,10 +74,18 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project_1
 
 // --- UPDATED: PASSPORT CONFIGURATION (GOOGLE) ---
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  let callbackURL = process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`;
+
+  // Safety Check: If running on Render but callback is set to localhost (common config error), fix it.
+  if (process.env.RENDER_SERVICE_ID && callbackURL.includes('localhost')) {
+      console.log("⚠️  Detected localhost callback in production. Switching to auto-generated production URL.");
+      callbackURL = `${BASE_URL}/auth/google/callback`;
+  }
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,      
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,                                        
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`,
+    callbackURL: callbackURL,
     passReqToCallback: true 
   },
   async (req, accessToken, refreshToken, profile, done) => {
@@ -520,7 +529,14 @@ app.get('*', (req, res, next) => {
 // --- GLOBAL ERROR HANDLER ---
 app.use((err, req, res, next) => {
   console.error("🔥 Global Error:", err);
-  res.status(500).json({ success: false, message: "Internal Server Error" });
+  
+  // If API request, return JSON
+  if (req.path.startsWith('/api') || req.xhr || (req.headers.accept && req.headers.accept.includes('json'))) {
+      return res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+  
+  // For browser navigation errors (like OAuth callback failures), redirect to login with error
+  res.redirect('/pages/login-admin.html?error=server_error');
 });
 
 app.listen(PORT, () => {

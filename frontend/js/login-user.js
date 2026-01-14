@@ -146,6 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 3. GOOGLE OAUTH REDIRECT ---
   googleBtn.addEventListener('click', () => {
     // Redirects to the backend Passport route
-    window.location.href = '/auth/google';
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectParam = urlParams.get('redirect');
+    
+    let authUrl = '/auth/google';
+    if (redirectParam && redirectParam.includes('create-event')) {
+        authUrl += '?origin=admin_page';
+    }
+    window.location.href = authUrl;
   });
 });

@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Helper Functions ---
   
   function switchView(viewName) {
+    if (!views.login || !views.signup) return;
     statusMsg.style.display = 'none'; 
     if (viewName === 'signup') {
       views.login.classList.remove('active');
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showMessage(text, type) {
+    if (!statusMsg) return;
     statusMsg.textContent = text;
     statusMsg.className = `status-message status-${type}`;
     statusMsg.style.display = 'block';
@@ -39,17 +41,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Event Listeners ---
 
-  toggles.showSignup.addEventListener('click', (e) => {
-    e.preventDefault();
-    switchView('signup');
-  });
+  if (toggles.showSignup) {
+    toggles.showSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('signup');
+    });
+  }
 
-  toggles.showLogin.addEventListener('click', (e) => {
-    e.preventDefault();
-    switchView('login');
-  });
+  if (toggles.showLogin) {
+    toggles.showLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('login');
+    });
+  }
 
   // --- 1. HANDLE MANUAL LOGIN (Email & Password) ---
+  if (forms.login) {
   forms.login.addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -100,8 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
       showMessage('Server error. Please try again later.', 'error');
     }
   });
+  }
 
   // --- 2. HANDLE SIGNUP (Username, Email, Password) ---
+  if (forms.signup) {
   forms.signup.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -148,8 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
       showMessage('Server error. Please try again later.', 'error');
     }
   });
+  }
 
   // --- 3. GOOGLE OAUTH REDIRECT ---
+  if (googleBtn) {
   googleBtn.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent following any hardcoded href in the HTML
     // Redirects to the backend Passport route
@@ -162,4 +173,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.location.href = authUrl;
   });
+  }
 });

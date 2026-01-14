@@ -144,8 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const title = encodeURIComponent(event.eventName);
             const details = encodeURIComponent(`Organized by ${event.organizationName}. Contact: ${event.organizerEmail}`);
+            const location = encodeURIComponent(`${event.address}, ${event.city}`);
 
-            return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${startDateTime}/${endDateTime}&ctz=Asia/Kolkata`;
+            return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${startDateTime}/${endDateTime}&ctz=Asia/Kolkata`;
         } catch (e) {
             console.error("Calendar URL error", e);
             return '#';
@@ -191,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.className = 'event-card';
 
         // Path Normalization
-        let imgSrc = toWebPath(event.imagePath) || 'https://via.placeholder.com/400x250?text=No+Image';
+        let imgSrc = toWebPath(event.imagePath) || 'https://placehold.co/400x250?text=No+Image';
         let pdfSrc = toWebPath(event.brochurePath) || '#';
 
         // URL Generation
@@ -211,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button class="delete-btn" title="Delete Event">
                     <i class="fas fa-trash-alt"></i>
                 </button>
-                <img src="${imgSrc}" alt="${event.eventName}" onerror="this.src='https://via.placeholder.com/400x250?text=Image+Not+Found'">
+                <img src="${imgSrc}" alt="${event.eventName}" onerror="this.onerror=null;this.src='https://placehold.co/400x250?text=Image+Not+Found'">
                 <span class="badge" style="text-transform: none;">${displayCategory}</span>
                 <button class="zoom-btn"><i class="fas fa-expand"></i></button>
             </div>

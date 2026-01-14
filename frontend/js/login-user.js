@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (errorParam === 'server_error') msg = "Server error during login. Please try again.";
       else if (errorParam === 'google_auth_failed') msg = "Google authentication failed.";
       else if (errorParam === 'oauth_not_configured') msg = "Google Login is not configured.";
+      else if (errorParam === 'oauth_invalid_client') msg = "Invalid Google Credentials. Check Render Environment Variables.";
       else if (errorParam === 'callback_failed') msg = "Login callback failed.";
       
       statusMsg.textContent = msg;

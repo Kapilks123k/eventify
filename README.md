@@ -174,7 +174,7 @@ PORT=3000
 SESSION_SECRET=very_long_random_string_for_production
 GOOGLE_CLIENT_ID=production_google_client_id
 GOOGLE_CLIENT_SECRET=production_google_client_secret
-GOOGLE_CALLBACK_URL=https://yourdomain.com/auth/google/callback
+GOOGLE_CALLBACK_URL=https://eventify-3iu8.onrender.com/auth/google/callback
 ```
 
 ## 🤝 Contributing

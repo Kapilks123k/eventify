@@ -28,7 +28,10 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
+const BASE_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://eventify-3iu8.onrender.com' 
+  : `http://localhost:${PORT}`;
 
 // --- Registration Schema ---
 const registrationSchema = new mongoose.Schema({
@@ -69,10 +72,11 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project_1
   });
 
 // --- UPDATED: PASSPORT CONFIGURATION (GOOGLE) ---
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,      
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,                                        
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/callback",
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`,
     passReqToCallback: true 
   },
   async (req, accessToken, refreshToken, profile, done) => {
@@ -114,6 +118,9 @@ passport.use(new GoogleStrategy({
     }
   }
 ));
+} else {
+  console.log("⚠️  Google OAuth credentials missing. Google Login skipped.");
+}
 
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
@@ -165,7 +172,7 @@ app.get('/auth/google', (req, res, next) => {
     // Check if Google OAuth is properly configured
     const cid = process.env.GOOGLE_CLIENT_ID;
     const csec = process.env.GOOGLE_CLIENT_SECRET;
-    const cb = process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/callback";
+    const cb = process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`;
 
     const missingCreds = !cid || !csec;
     const placeholderCreds = (cid || '').includes('your_google_client_id_here') || (csec || '').includes('your_google_client_secret_here');
@@ -507,5 +514,5 @@ app.get('*', (req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on ${BASE_URL}`);
 });

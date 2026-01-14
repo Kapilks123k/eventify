@@ -29,7 +29,7 @@ const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const BASE_URL = process.env.NODE_ENV === 'production' 
+const BASE_URL = (process.env.NODE_ENV === 'production' || process.env.RENDER_SERVICE_ID)
   ? 'https://eventify-3iu8.onrender.com' 
   : `http://localhost:${PORT}`;
 
@@ -139,7 +139,7 @@ const ensureAuthenticated = (req, res, next) => {
         return next();
     }
     // Case 4 Protection: If accessing create-event without auth, redirect to Admin Login
-    res.redirect('/pages/login-admin.html');
+    res.redirect('/pages/login-admin.html?redirect=/pages/create-event.html');
 };
 
 // --- ROUTES ---
@@ -228,7 +228,7 @@ app.get('/auth/google/callback',
 // --- MANUAL LOGIN ROUTE ---
 app.post('/login', async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, redirectUrl } = req.body;
     
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ success: false, message: 'Invalid email address' });
@@ -254,7 +254,7 @@ app.post('/login', async (req, res, next) => {
             success: true, 
             message: 'Login successful!', 
             user: { username: user.username, role: 'admin' },
-            redirectUrl: '/pages/find-events.html'
+            redirectUrl: redirectUrl || '/pages/find-events.html'
         });
     });
 
@@ -511,6 +511,12 @@ app.get('*', (req, res, next) => {
     return next();
   }
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
+
+// --- GLOBAL ERROR HANDLER ---
+app.use((err, req, res, next) => {
+  console.error("🔥 Global Error:", err);
+  res.status(500).json({ success: false, message: "Internal Server Error" });
 });
 
 app.listen(PORT, () => {

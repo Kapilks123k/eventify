@@ -61,8 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     
     // Updated: Fetching Email instead of Username
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value.trim();
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+
+    if (!emailInput || !passwordInput) {
+        showMessage('Error: Login input fields not found.', 'error');
+        return;
+    }
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
 
     // Capture redirect URL from query parameters (e.g., ?redirect=/pages/create-event.html)
     const urlParams = new URLSearchParams(window.location.search);
@@ -114,9 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
   forms.signup.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const username = document.getElementById('signup-username').value.trim();
-    const email = document.getElementById('signup-email').value.trim();
-    const password = document.getElementById('signup-password').value.trim();
+    const usernameInput = document.getElementById('signup-username');
+    const emailInput = document.getElementById('signup-email');
+    const passwordInput = document.getElementById('signup-password');
+
+    if (!usernameInput || !emailInput || !passwordInput) {
+        showMessage('Error: Signup input fields not found.', 'error');
+        return;
+    }
+
+    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
 
     if (!username || !email || !password) {
       showMessage('All fields are required.', 'error');

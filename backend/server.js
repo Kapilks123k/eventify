@@ -45,6 +45,16 @@ registrationSchema.index({ userId: 1, eventName: 1 }, { unique: true });
 
 const Registration = mongoose.model('Registration', registrationSchema);
 
+// --- Helper: Cleanup Expired Events ---
+const cleanupExpiredEvents = async () => {
+    try {
+        const now = new Date();
+        await Event.deleteMany({ eventDateTime: { $lt: now } });
+    } catch (err) {
+        console.error("Error cleaning up expired events:", err);
+    }
+};
+
 // --- Middleware ---
 app.use(cors());
 app.use(bodyParser.json());
@@ -431,6 +441,7 @@ const cpUpload = upload.fields([{ name: 'eventImage', maxCount: 1 }, { name: 'ev
 app.get('/api/my-events', async (req, res) => {
     if (!req.isAuthenticated()) return res.status(401).json({ message: "Unauthorized" });
     try {
+        await cleanupExpiredEvents();
         const events = await Event.find({ createdBy: req.user._id }).sort({ _id: -1 });
         res.json(events);
     } catch (error) {
@@ -443,6 +454,7 @@ app.get('/api/my-events', async (req, res) => {
 // The frontend reverses this list before rendering to the top of the stack.
 app.get('/api/events', async (req, res) => {
     try {
+        await cleanupExpiredEvents();
         const events = await Event.find({}).sort({ _id: -1 });
         res.json(events);
     } catch (error) {

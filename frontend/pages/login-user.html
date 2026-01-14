@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Login | Event Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../css/login-user.css" />
+  <script src="../js/login-user.js" defer></script>
+</head>
+<body>
+
+  <div class="container">
+    <div id="status-message" class="status-message"></div>
+
+    <div class="form_box active" id="view-login">
+      <h2>User Login</h2>
+      <form id="form-login" novalidate>
+        <div class="input_box">
+          <input type="email" id="login-email" required placeholder="Email Address" />
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="input_box">
+          <input type="password" id="login-password" required placeholder="Password" />
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <button class="submit-btn" type="submit">Sign In</button>
+      </form>
+      
+      <div id="dashboard-link-container">
+        <a href="#" class="dashboard-link">Proceed to Dashboard <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="toggle-link">
+        New to the platform? <a href="#" id="btn-show-signup">Create an account</a>
+      </div>
+
+      <div class="google-auth-container">
+        <div class="separator-or"><span>OR</span></div>
+        <button type="button" class="google-btn" id="btn-google">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Icon">
+          <span>Continue with Google</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="form_box" id="view-signup">
+      <h2>Create User Account</h2>
+      <form id="form-signup" novalidate>
+        <div class="input_box">
+          <input type="text" id="signup-username" required placeholder="Choose a Username" />
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="input_box">
+          <input type="email" id="signup-email" required placeholder="Email Address" />
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="input_box">
+          <input type="password" id="signup-password" required placeholder="Create Password" minlength="6" />
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <button class="submit-btn" type="submit">Register</button>
+      </form>
+      <div class="toggle-link">
+        Already have an account? <a href="#" id="btn-show-login">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

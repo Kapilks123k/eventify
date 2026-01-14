@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventify - Landing Page</title>
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Eventify</div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+       <ul class="nav-links">
+          <li><a href="#home" class="home-btn">Home</a></li>
+          
+          <li><a href="pages/login-admin.html">Create Events</a></li>
+
+          <li><a href="pages/find-events.html">Find Events</a></li>
+
+          <li><a href="#faq-section" class="faq-link">FAQ</a></li>
+
+          <li><a href="#about-section">About</a></li>
+      </ul>
+      
+      <div class="nav-extra"></div>
+    </nav>
+
+    <header class="hero-section" id="home">
+        <div class="slider-container">
+            <div class="slide active">
+                <img src="assets/images/Hakathon-img.jpg" alt="Hackathon Event">
+            </div>
+            <div class="slide">
+                <img src="assets/images/Cleanliness-awarness.jpg" alt="Cleanliness Awareness">
+            </div>
+            <div class="slide">
+                <img src="assets/images/Social-awarness.jpg" alt="Social Awareness Event">
+            </div>
+        </div>
+
+        <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="hero-content">
+            <h1>Discover Events Near You</h1>
+            <p>Find and participate in local events based on your interests.</p>
+            </div>
+    </header>
+
+    <main>
+
+<section class="events-preview-section">
+          <div class="container">
+            <div class="section-header">
+              <h2>Events Preview</h2>
+            </div>
+
+            <div class="events-grid">
+              
+              <div class="event-card">
+                <div class="card-image">
+                  <img src="assets/images/Dj.jpeg" alt="Summer Jazz Festival" onerror="this.src='https://via.placeholder.com/400x200?text=Event+Image'">
+                  <span class="badge">Other</span>
+                  <button class="zoom-btn"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="card-content">
+                  <div class="card-header-row">
+                      <h3>Summer Jazz Festival</h3>
+                      <a href="assets/demo/Demo Brochure.pdf" class="brochure-icon" title="Download Brochure"><i class="fas fa-file-pdf"></i></a>
+                  </div>
+                  <div class="card-org">Organized by: <strong>JJ Organisation</strong></div>
+                  
+                  <p class="date">Jan 24, 2026 • 6:00 PM</p>
+                  
+                  <div class="card-contact">
+                      <h4>Contact</h4>
+                      <p><i class="fas fa-envelope"></i> info@jjorg.com</p>
+                      <p><i class="fas fa-phone"></i> +91 98200 12345</p>
+                  </div>
+
+                  <div class="card-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="https://maps.app.goo.gl/uPxWPdoXpgUGLy4B8" target="_blank">Empire Hills Ground, Andheri West, Mumbai</a>
+                  </div>
+                  
+                  <div class="card-actions">
+                      <a href="pages/find-events.html" class="navigate-btn">Go to Find Events</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <div class="card-image">
+                  <img src="assets/images/Tech.jpeg" alt="Future AI Summit" onerror="this.src='https://via.placeholder.com/400x200?text=Event+Image'">
+                  <span class="badge">Education</span>
+                  <button class="zoom-btn"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="card-content">
+                  <div class="card-header-row">
+                      <h3>Future AI Summit</h3>
+                      <a href="assets/demo/Demo Brochure.pdf" class="brochure-icon" title="Download Brochure"><i class="fas fa-file-pdf"></i></a>
+                  </div>
+                  <div class="card-org">Organized by: <strong>Tech Pune</strong></div>
+                  
+                  <p class="date">Jan 30, 2026 • 9:00 AM</p>
+                  
+                  <div class="card-contact">
+                      <h4>Contact</h4>
+                      <p><i class="fas fa-envelope"></i> contact@techpune.edu</p>
+                      <p><i class="fas fa-phone"></i> +91 20 2435 6789</p>
+                  </div>
+                  
+                  <div class="card-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="https://maps.app.goo.gl/zY4QMWr9dR5XeWkT6" target="_blank">Sinhgad Technical Campus, Vadgaon, Pune</a>
+                  </div>
+
+                  <div class="card-actions">
+                      <a href="pages/find-events.html" class="navigate-btn">Go to Find Events</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <div class="card-image">
+                  <img src="assets/images/Zero-hunger.jpeg" alt="Zero Hunger Drive" onerror="this.src='https://via.placeholder.com/400x200?text=Event+Image'">
+                  <span class="badge">NGO/Org</span>
+                  <button class="zoom-btn"><i class="fas fa-expand"></i></button>
+                </div>
+                <div class="card-content">
+                  <div class="card-header-row">
+                      <h3>Zero Hunger Drive</h3>
+                      <a href="assets/demo/Demo Brochure.pdf" class="brochure-icon" title="Download Brochure"><i class="fas fa-file-pdf"></i></a>
+                  </div>
+                  <div class="card-org">Organized by: <strong>Feed India</strong></div>
+                  
+                  <p class="date">Jan 26, 2026 • 11:00 AM</p>
+                  
+                  <div class="card-contact">
+                      <h4>Contact</h4>
+                      <p><i class="fas fa-envelope"></i> help@feedindia.org</p>
+                      <p><i class="fas fa-phone"></i> +91 88888 99999</p>
+                  </div>
+                  
+                  <div class="card-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="https://maps.app.goo.gl/9Y6fm8VxAmowDfeT6" target="_blank">Ganesh Kala Krida, Swargate, Pune</a>
+                  </div>
+
+                  <div class="card-actions">
+                      <a href="pages/find-events.html" class="navigate-btn">Go to Find Events</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+        
+        <div class="features-header">
+            <h2>Browse by categories</h2>
+            <hr>
+        </div>
+
+       <div class="cards-container">
+          <div class="card" data-category="Exhibition" style="cursor: pointer;">
+              <div class="icon-box-feature"><i class="fa-solid fa-images"></i></div>
+              <h3>Exhibition</h3>
+              <p>Showcasing artistic and creative collections to the public.</p>
+          </div>
+          
+          <div class="card" data-category="NGO/Org" style="cursor: pointer;">
+              <div class="icon-box-feature"><i class="fa-solid fa-hand-holding-heart"></i></div>
+              <h3>NGO/Org</h3>
+              <p>Support meaningful causes through social action and charity.</p>
+          </div>
+
+          <div class="card" data-category="Health" style="cursor: pointer;">
+              <div class="icon-box-feature"><i class="fa-solid fa-heart-pulse"></i></div>
+              <h3>Health</h3>
+              <p>Promoting wellness and providing essential medical support services.</p>
+          </div>
+
+          <div class="card" data-category="Education" style="cursor: pointer;">
+              <div class="icon-box-feature"><i class="fa-solid fa-graduation-cap"></i></div>
+              <h3>Education</h3>
+              <p>Expand your knowledge through workshops, seminars, and conferences.</p>
+          </div>
+
+          <div class="card" data-category="Students" style="cursor: pointer;">
+              <div class="icon-box-feature"><i class="fa-solid fa-users"></i></div>
+              <h3>Students</h3>
+              <p>Discover fests, hackathons, and clubs for campus life.</p>
+          </div>
+
+          <div class="card" data-category="Marketing" style="cursor: pointer;">
+              <div class="icon-box-feature"><i class="fa-solid fa-chart-line"></i></div>
+              <h3>Marketing</h3>
+              <p>Strategic promotion to boost brand visibility and engagement.</p>
+          </div>
+
+          <div class="card" data-category="Political" style="cursor: pointer;">
+              <div class="icon-box-feature"><i class="fa-solid fa-check-to-slot"></i></div>
+              <h3>Political</h3>
+              <p>Organizing rallies and outreach for political leadership goals.</p>
+          </div>
+
+          <div class="card" data-category="Other" style="cursor: pointer;">
+              <div class="icon-box-feature"><i class="fa-regular fa-circle-question"></i></div>
+              <h3>Other</h3>
+              <p>If the event category does not match any of the provided categories, select the 'Other' category.</p>
+          </div>
+      </div>
+        <section class="control-flow-section">
+            <div class="flow-container">
+                <h2 class="section-title">User Control Flow</h2>
+                <hr class="separator-line">
+
+                <div class="flow-cards-wrapper">
+                    <div class="flow-card">
+                        <div class="icon-box-flow"><i class="fa-solid fa-magnifying-glass"></i></div>
+                        <div class="text-content">
+                            <h3>1. Find Events Section</h3>
+                            <p>User can view all the hosted events on the Eventify in the 'Find Events' section.</p>
+                        </div>
+                    </div>
+                    <div class="flow-card">
+                        <div class="icon-box-flow"><i class="fa-solid fa-list-ul"></i></div>
+                        <div class="text-content">
+                            <h3>2. Select Category</h3>
+                            <p>Choose your area of interest from the available options to personalize your feed.</p>
+                        </div>
+                    </div>
+                    <div class="flow-card">
+                        <div class="icon-box-flow"><i class="fa-solid fa-bell"></i></div>
+                        <div class="text-content">
+                            <h3>3. Alerts</h3>
+                            <p>Users can register events simply by logging into their account.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <section class="control-flow-section" id="org-control-flow-section">
+    <div class="flow-container">
+        <h2 class="section-title">Organisation Control Flow</h2>
+        <hr class="separator-line">
+        
+        <div class="flow-cards-wrapper">
+            <div class="flow-card">
+                <div class="icon-box-flow"><i class="fas fa-user-plus"></i></div>
+                <div class="text-content">
+                    <h3>1. Create Account</h3>
+                    <p>Register your organisation to unlock the platform. Set up your profile.</p>
+                </div>
+            </div>
+
+            <div class="flow-card">
+                <div class="icon-box-flow"><i class="fas fa-edit"></i></div>
+                <div class="text-content">
+                    <h3>2. Define Event</h3>
+                    <p>All details in the create event form must be filled.</p>
+                </div>
+            </div>
+
+            <div class="flow-card">
+                <div class="icon-box-flow"><i class="fa-solid fa-bell"></i></div>
+                <div class="text-content">
+                    <h3>3. Alerts</h3>
+                    <p>Users can view upcoming events simply by logging into their account.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <section class="faq-section" id="faq-section">
+          <div class="faq-container-wide">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <hr class="separator-line">
+            <div class="faq-wrapper">
+              <div class="faq-item">
+                <button class="faq-question">
+                  <span>How do I register my organisation?</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>Simply navigate to the Create Event section,Click on the create new event ,you can start posting event immediately.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question">
+                  <span>Is there a fee for hosting events?</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>No, Eventify is a non-profit initiative. It is completely free for all social causes, NGOs, and educational events to ensure maximum community participation.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question">
+                  <span>How do I get notified about Hackathons?</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>Create an account and select Students in Discover Events Nearby section. Matching events will automatically appear in the "Find Event" section.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question">
+                  <span>Do you offer opportunities for volunteering?</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>Currently,No. We focus on platform coordination, but may introduce volunteering in future updates.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+    </main>
+
+    <footer class="footer-section" id="about-section">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="single-cta">
+                    <div class="cta-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="cta-text">
+                        <span>ABC Chowk Pune City</span>
+                        <strong>Maharashtra, India</strong>
+                    </div>
+                </div>
+                <div class="single-cta">
+                    <div class="cta-icon"><i class="fas fa-phone"></i></div>
+                    <div class="cta-text">
+                        <strong>+91 84355 12345</strong>
+                    </div>
+                </div>
+                <div class="single-cta">
+                    <div class="cta-icon"><i class="fas fa-envelope-open"></i></div>
+                    <div class="cta-text">
+                        <a href="mailto:support@company.com">support@company.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-widget">
+                    <div class="footer-heading">
+                        <h3>About the company</h3>
+                    </div>
+                    <div class="footer-text">
+                        <p>Our website is a centralized platform that showcases campaigns and events related to Cleanliness, Hackathons, Social Awareness, and Health. Users receive personalized notifications based on interests.</p>
+                    </div>
+                    <div class="footer-social-icon">
+                        
+    <a href="https://www.facebook.com/profile.php?id=61586509943733" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook"></i>
+    </a>
+
+   
+    <a href="https://www.instagram.com/eventifypage/" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram"></i></a>
+      
+    </a>
+
+    <a href="https://www.linkedin.com/in/eventify1" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://github.com/resources/events" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-github"></i>
+    </a>
+
+  </div> 
+  </div>
+  </div>
+  </footer>
+
+  <div id="imageModal" class="image-modal">
+      <span class="close-modal">×</span>
+      <img class="modal-content" id="fullImage">
+      <div id="caption"></div>
+  </div>
+
+ </body>
+</html>

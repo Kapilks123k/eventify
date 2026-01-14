@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  
+  <style>
+    /* --- Core Styles (Preserved) --- */
+    :root {
+      --primary: #4a90e2;
+      --primary-light: #7ab8f5;
+      --primary-dark: #2a64b7;
+      --bg-gradient: linear-gradient(135deg, #e0f0ff 0%, #a8d0ff 100%);
+      --text-primary: #2c3e50;
+      --text-secondary: #637381;
+    }
+
+    body {
+      margin: 0; padding: 0;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-primary);
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(74, 144, 226, 0.3);
+      width: 420px; max-width: 95vw;
+      position: relative;
+      padding: 32px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .status-message {
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      display: none; 
+    }
+    .status-error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+    .status-success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+
+    #protected-link-container { margin-top: 15px; display: none; }
+    
+    .dashboard-link {
+      display: inline-block; text-decoration: none;
+      background: #27ae60; color: white;
+      padding: 10px 20px; border-radius: 5px;
+      font-weight: bold; animation: popIn 0.3s ease-out;
+    }
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .form_box { display: none; }
+    .form_box.active { display: block; }
+    .input_box { position: relative; margin-bottom: 18px; }
+    
+    .input_box input {
+      width: 100%; padding: 14px 14px 14px 44px;
+      border: 1.8px solid #d8dce6; border-radius: 8px;
+      outline: none; font-size: 1rem; box-sizing: border-box;
+      transition: 0.3s;
+    }
+    .input_box input:focus { border-color: var(--primary); background: #f0f5fa; }
+    
+    .input_box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--primary); }
+    
+    button.submit-btn {
+      width: 100%; padding: 14px; border: none; border-radius: 8px;
+      background: linear-gradient(120deg, var(--primary), var(--primary-dark));
+      color: white; font-size: 1.1em; font-weight: 700; cursor: pointer;
+      transition: filter 0.3s;
+    }
+    button.submit-btn:hover { filter: brightness(1.1); }
+    
+    .toggle-link { margin-top: 10px; font-size: 0.9em; color: var(--text-secondary); }
+    .toggle-link a { color: var(--primary); text-decoration: none; font-weight: 600; cursor: pointer; }
+
+    /* --- Google OAuth Styles --- */
+    .google-auth-container { margin-top: 24px; }
+    
+    .separator-or {
+      display: flex; align-items: center; text-align: center;
+      color: var(--text-secondary); margin-bottom: 20px;
+    }
+    .separator-or::before, .separator-or::after {
+      content: ''; flex: 1; border-bottom: 1px solid #d8dce6;
+    }
+    .separator-or span { padding: 0 14px; font-size: 0.9em; font-weight: 600; }
+
+    .google-btn {
+      width: 100%; display: flex; align-items: center; justify-content: center;
+      padding: 12px; background: white; border: 1.8px solid #d8dce6;
+      border-radius: 8px; cursor: pointer; transition: background-color 0.2s, border-color 0.2s;
+      text-decoration: none; color: var(--text-primary); font-size: 1rem; font-weight: 600;
+      box-sizing: border-box;
+    }
+    .google-btn:hover { background-color: #f8faff; border-color: #cdd1da; }
+    .google-btn img { width: 20px; height: 20px; margin-right: 12px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="statusMessage" class="status-message"></div>
+
+    <div class="form_box active" id="loginForm">
+      <h2>Organisation Login</h2>
+      <form id="login_form_element">
+        <div class="input_box">
+          <input id="login_email" type="email" required placeholder="Email" />
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="input_box">
+          <input id="login_password" type="password" required placeholder="Password" />
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <button class="submit-btn" type="submit">Login</button>
+      </form>
+      
+      <div id="protected-link-container">
+        <a href="create-event.html" class="dashboard-link">Go to Create Events<i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="toggle-link">
+        Don't have an account? <a onclick="toggleForms('signup')">Sign up</a>
+      </div>
+
+      <div class="google-auth-container">
+        <div class="separator-or"><span>OR</span></div>
+        <a href="http://localhost:3000/auth/google?origin=admin_page" class="google-btn">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Icon">
+          <span>Continue with Google</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="form_box" id="signupForm">
+      <h2>Create Account</h2>
+      <form id="signup_form_element">
+        <div class="input_box">
+          <input id="signup_username" type="text" required placeholder="Username" />
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="input_box">
+          <input id="signup_email" type="email" required placeholder="Email" />
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="input_box">
+          <input id="signup_password" type="password" required placeholder="Password" />
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <button class="submit-btn" type="submit">Sign Up</button>
+      </form>
+      <div class="toggle-link">
+        Already have an account? <a onclick="toggleForms('login')">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "http://localhost:3000";
+
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const statusMsg = document.getElementById('statusMessage');
+    const protectedLinkContainer = document.getElementById('protected-link-container');
+
+    function toggleForms(view) {
+      statusMsg.style.display = 'none';
+      protectedLinkContainer.style.display = 'none';
+      if (view === 'signup') {
+        signupForm.classList.add('active');
+        loginForm.classList.remove('active');
+      } else {
+        loginForm.classList.add('active');
+        signupForm.classList.remove('active');
+      }
+    }
+
+    function showMessage(msg, type) {
+      statusMsg.textContent = msg;
+      statusMsg.className = `status-message status-${type}`;
+      statusMsg.style.display = 'block';
+    }
+
+    // --- HANDLE LOGIN ---
+    document.getElementById('login_form_element').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('login_email').value;
+      const password = document.getElementById('login_password').value;
+
+      try {
+        const response = await fetch(`${API_URL}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include', 
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage(data.message, 'success');
+          protectedLinkContainer.style.display = 'block';
+            setTimeout(() => {
+             window.location.href = 'create-event.html'; 
+          }, 1500);
+        } else {
+          showMessage(data.message, 'error');
+        }
+      } catch (err) {
+        showMessage("Server connection failed.", 'error');
+      }
+    });
+
+    // --- HANDLE SIGNUP ---
+    document.getElementById('signup_form_element').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('signup_username').value;
+      const email = document.getElementById('signup_email').value;
+      const password = document.getElementById('signup_password').value;
+
+      try {
+        const response = await fetch(`${API_URL}/signup-admin`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          showMessage('Account created! Please login.', 'success');
+          setTimeout(() => toggleForms('login'), 1500);
+        } else {
+          showMessage(data.message, 'error');
+        }
+      } catch (err) {
+        showMessage("Server connection failed.", 'error');
+      }
+    });
+
+    // --- CHECK FOR ERRORS & AUTH STATUS ON LOAD ---
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        if (urlParams.has('error')) {
+            const errorType = urlParams.get('error');
+            if (errorType === 'google_auth_failed') {
+                showMessage('Google Authentication failed. Please try again.', 'error');
+            } else if (errorType === 'conflict_active_session') {
+                showMessage('You are already logged in via manual/session. Please logout first.', 'error');
+            } else if (errorType === 'conflict_google') {
+                showMessage('You are already logged in. Please logout first.', 'error');
+            }
+        }
+
+        // Auto-Redirect if Already Logged In
+        fetch(`${API_URL}/api/auth-status`, { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.isAuthenticated) {
+                    window.location.href = 'create-event.html';
+                }
+            })
+            .catch(console.error);
+    });
+  </script>
+</body>
+</html>

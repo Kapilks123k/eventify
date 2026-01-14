@@ -1,0 +1,889 @@
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; 
+}
+
+/* =========================================
+   1. ROOT VARIABLES & GLOBAL RESET
+   ========================================= */
+:root {
+    --primary-color: #2b6cb0;    
+    --hover-bg:      #edf2f7;    
+    --text-dark:     #4a5568;    
+    --text-white:    #ffffff;    
+    --bg-body:       #f8f9fa;    
+    --nav-height:    80px;       
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+}
+
+/* =========================================
+   2. NAVIGATION BAR
+   ========================================= */
+.navbar {
+    background-color: var(--text-white);
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    width: 150px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 25px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-color);
+}
+
+.nav-links a:hover, a.active {
+    color: #2b6cb0;
+    background-color: #edf2f7;
+}
+
+.nav-extra {
+    width: 150px; 
+}
+
+/* MOBILE MENU TOGGLE */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-dark);
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* =========================================
+   3. CREATE SECTION & MODAL
+   ========================================= */
+.create-section {
+    padding: 60px 0;
+    text-align: center;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.add-event-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.add-event-card {
+    width: 300px;
+    height: 250px;
+    border: 3px dashed #2b6cb0;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: rgba(43, 108, 176, 0.05);
+}
+
+.add-event-card:hover {
+    background-color: rgba(43, 108, 176, 0.1);
+    transform: translateY(-5px);
+}
+
+.icon-plus { 
+    font-size: 3rem; 
+    color: #2b6cb0; 
+    margin-bottom: 15px; 
+}
+
+.add-event-card h3 { color: #2b6cb0; }
+.add-event-card p { font-size: 0.9rem; color: #666; }
+
+/* --- MODAL FORM STYLING --- */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0; top: 0;
+    width: 100%; height: 100%; 
+    background-color: rgba(0,0,0,0.6); 
+    justify-content: center; align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%; max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(-20px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+.close-btn {
+    position: absolute; top: 15px; right: 20px;
+    font-size: 28px; cursor: pointer; color: #aaa;
+}
+.close-btn:hover { color: #333; }
+
+.form-header { text-align: center; margin-bottom: 25px; color: #333; }
+.form-group { margin-bottom: 20px; text-align: left; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 12px;
+    border: 1px solid #ccc; border-radius: 6px;
+    font-size: 1rem;
+}
+
+.submit-btn {
+    width: 100%; padding: 12px;
+    background-color: #2b6cb0; color: #fff;
+    border: none; border-radius: 6px;
+    font-size: 1.1rem; font-weight: bold; cursor: pointer;
+    margin-top: 10px; transition: background 0.3s;
+}
+.submit-btn:hover { background-color: #1a4971; }
+
+/* =========================================
+   4. CREATED EVENTS SECTION (REFACTORED)
+   ========================================= */
+.events-display {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    min-height: 400px;
+}
+
+.events-display .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Headings */
+.events-display h2 {
+    font-size: 2.5rem !important; 
+    color: #2d3748;
+    text-align: center;
+    margin-bottom: 20px !important;
+    font-weight: 700;
+}
+
+.events-display .separator-line {
+    width: 100px; /* Clean small line */
+    height: 3px;
+    background-color: #2b6cb0; /* Uses primary color */
+    margin: 0 auto 50px auto;
+    border: none;
+}
+
+/* --- THE GRID LAYOUT FIX --- */
+.events-grid {
+    display: grid;
+    /* This creates a responsive grid that fits as many 300px cards as possible */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 30px; /* Professional spacing between cards */
+    padding: 10px 0;
+    width: 100%;
+}
+
+/* No Results Styling */
+.no-results {
+    text-align: center;
+    padding: 50px;
+    grid-column: 1 / -1; /* Spans full width */
+}
+.no-results i {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    color: #cbd5e0;
+    display: block;
+}
+.no-results p {
+    font-size: 1.25rem;
+    color: #718096;
+}
+
+/* =========================================
+   5. EVENT CARD STYLES (UNIFIED)
+   ========================================= */
+.event-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensures all cards in a row are same height */
+    position: relative;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-image {
+    height: 180px;
+    background-color: #edf2f7;
+    position: relative;
+    width: 100%;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Badge (Orange Pill) */
+.badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #ff9f43;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+.card-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.card-header-row h3 {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: #2d3748;
+    font-weight: 700;
+    margin: 0;
+}
+
+.brochure-icon {
+    color: #e53e3e;
+    font-size: 1.2rem;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.brochure-icon:hover { transform: scale(1.1); }
+
+.card-org {
+    font-size: 0.85rem;
+    color: #718096;
+    margin-bottom: 12px;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+/* Delete Button (Top Left) */
+.delete-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 32px;
+    height: 32px;
+    background-color: #e53e3e; /* Red warning color */
+    color: #fff;
+    border: none;
+    border-radius: 50%; /* Circle shape */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10; /* Ensure it stays above image */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c53030;
+    transform: scale(1.1);
+}
+
+.delete-btn i {
+    font-size: 0.9rem;
+}
+
+/* Contact Box */
+.card-contact {
+    background-color: #f7fafc;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border: 1px solid #edf2f7;
+}
+
+.card-contact h4 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #a0aec0;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.card-contact p {
+    font-size: 0.85rem;
+    color: #4a5568;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-location {
+    display: flex;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 20px;
+    margin-top: auto; /* Pushes location to bottom of content area */
+}
+.card-location i { color: #e53e3e; margin-top: 3px; }
+.card-location a { text-decoration: none; color: inherit; }
+.card-location a:hover { color: #2b6cb0; text-decoration: underline; }
+
+/* Buttons */
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #48bb78; /* Green */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.register-btn:hover { background-color: #38a169; }
+
+.calendar-btn {
+    width: 100%;
+    padding: 8px;
+    background-color: #fff;
+    color: #4a5568;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+.calendar-btn:hover {
+    background-color: #ebf8ff;
+    border-color: #2b6cb0;
+    color: #2b6cb0;
+}
+
+.zoom-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+    z-index: 5;
+}
+.zoom-btn:hover { background-color: rgba(0,0,0,0.8); }
+
+/* =========================================
+   6. USER FLOW SECTION (STATIC)
+   ========================================= */
+.control-flow-section {
+    padding: 60px 20px;
+    background-color: #fff; 
+    border-top: 1px solid #eee;
+}
+
+.flow-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.flow-cards-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.flow-card {
+    background: #ffffff;
+    width: 320px;
+    padding: 40px 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #eee;
+}
+
+.icon-box-flow {
+    width: 70px;
+    height: 70px;
+    background-color: #2d3748;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+}
+
+.text-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: #2d3748;
+}
+.text-content p {
+    font-size: 0.95rem;
+    color: #718096;
+    line-height: 1.6;
+}
+
+/* =========================================
+   7. FAQ SECTION
+   ========================================= */
+.faq-section {
+    padding: 80px 20px;
+    background-color: #f8f9fa;
+}
+
+.faq-container-wide {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.faq-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    margin-top: 40px;
+}
+
+.faq-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.faq-answer p {
+    padding: 0 20px 20px;
+    color: #718096;
+}
+.faq-item.active .faq-answer { max-height: 200px; }
+.faq-item.active .faq-question i { transform: rotate(180deg); }
+
+/* =========================================
+   8. FOOTER
+   ========================================= */
+.footer-section {
+    background: #212529;
+    padding: 70px 0;
+    width: 100%;
+    color: #ffffff;
+    margin-top: 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 20px;
+    flex-wrap: wrap;
+}
+
+.footer-left {
+    flex: 1;
+    min-width: 300px;
+    margin-bottom: 30px;
+}
+
+.single-cta {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.cta-icon {
+    margin-right: 20px;
+}
+
+.cta-icon i {
+    color: #fff;
+    font-size: 20px;
+    background-color: #33383c;
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.cta-text {
+    padding-top: 2px;
+}
+
+.cta-text span {
+    font-size: 15px;
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.cta-text strong {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+}
+
+.cta-text a {
+    color: #4a8adb;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.cta-text a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.footer-right {
+    flex: 1;
+    min-width: 300px;
+    padding-left: 50px;
+}
+
+.footer-widget .footer-heading h3 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.footer-text p {
+    color: #8f9296;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.footer-social-icon {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social-icon a {
+    color: #fff;
+    font-size: 18px;
+    background-color: #33383c;
+    height: 45px;
+    width: 45px;
+    line-height: 45px;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-social-icon a:hover {
+    background-color: #4a8adb;
+    color: #fff;
+    transform: translateY(-3px);
+}
+/* =========================================
+   MEDIA QUERIES (To match Landing Page responsiveness)
+   ========================================= */
+
+@media screen and (max-width: 991px) {
+    .footer-content {
+        grid-template-columns: 1fr; /* Stack vertically on tablets */
+        gap: 40px;
+    }
+
+    .footer-left {
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .footer-left {
+        flex-direction: column; /* Stack contact info on mobile */
+        align-items: flex-start;
+    }
+}
+
+/* =========================================
+   9. RESPONSIVE STYLES
+   ========================================= */
+@media screen and (max-width: 768px) {
+    .navbar { padding: 0 20px; }
+    .nav-extra { display: none; }
+    .menu-toggle { display: flex; order: 2; }
+    
+    .nav-links {
+        position: fixed;
+        right: -100%;
+        top: var(--nav-height);
+        width: 100vw;
+        height: calc(100vh - var(--nav-height));
+        background-color: #fff;
+        flex-direction: column;
+        padding-top: 60px;
+        transition: right 0.4s ease;
+    }
+    .nav-links.active { right: 0; }
+    .nav-links li { text-align: center; width: 100%; }
+    .nav-links a { display: block; padding: 20px; font-size: 1.2rem; }
+    
+    .footer-content { flex-direction: column; }
+    .footer-right { padding-left: 0; margin-top: 30px; }
+}
+
+/* =========================================
+   10. IMAGE MODAL (ZOOM)
+   ========================================= */
+.modal-zoom {
+    display: none; 
+    position: fixed;
+    z-index: 3000;
+    padding-top: 50px;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.9);
+}
+.modal-zoom-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    object-fit: contain;
+}
+.close-modal {
+    position: absolute;
+    top: 20px; right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* This creates the smooth slide effect */
+}
+
+.faq-item.active .faq-answer {
+    /* The JS handles the exact pixel height, but we keep this for safety */
+    display: block; 
+}
+
+/* 1. The Answer Box (Hidden by default) */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Smooth slide effect */
+    padding: 0 1rem; /* Prevent padding from breaking the collapse */
+}
+
+/* 2. The Question Button Hover Effect */
+.faq-question {
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth color change */
+}
+
+.faq-question:hover {
+    background-color: #f0f0f0; /* Light gray on hover */
+}
+
+/* 3. Arrow Icon Rotation Animation */
+.faq-question i {
+    transition: transform 0.3s ease; /* Smooth rotation */
+}
+
+/* Rotate the arrow 180 degrees when active */
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+/* =========================================
+   FAQ HOVER & ACTIVE EFFECTS
+   ========================================= */
+
+/* 1. Change text and icon color on HOVER */
+.faq-question:hover span,
+.faq-question:hover i {
+    color: #2980b9; /* This is a standard blue. Change to your theme color if needed */
+}
+
+/* 2. Keep the color changed when the question is OPEN (Active) */
+.faq-item.active .faq-question span,
+.faq-item.active .faq-question i {
+    color: #2980b9; 
+    font-weight: bold; /* Optional: makes the active question pop more */
+}
+
+/* 3. Ensure the transition is smooth */
+.faq-question span,
+.faq-question i {
+    transition: color 0.3s ease;
+}
+/* =========================================
+    NO EVENTS PLACEHOLDER STYLES
+========================================= */
+.no-events-container {
+    display: flex; /* Enables flexbox for centering */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin: 30px auto; /* Centers container horizontally with margin above */
+    max-width: 500px; /* Ensures it doesn't get too wide */
+    width: 100%;
+}
+
+.no-events-img {
+    width: 120px; /* Adjust size based on your actual image */
+    height: auto;
+    margin-bottom: 25px;
+    opacity: 0.6; /* Slightly muted look for empty state */
+}
+
+.no-events-container h3 {
+    font-size: 1.4rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.no-events-container p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event - Eventify</title>
+    <link rel="stylesheet" href="../css/create-event.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+   <nav class="navbar">
+        <div class="logo">Eventify</div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+       <ul class="nav-links">
+          <li><a href="../index.html" class="home-btn">Home</a></li>
+
+          <li><a  href="#12" class="active">Create Events</a></li>
+
+          <li><a href="#11">Working</a></li>
+
+          <li><a href="#faq-section" class="faq-link">FAQ</a></li>
+
+          <li><a href="#about-section">About</a></li>
+      </ul>
+      
+      <div class="nav-extra"></div>
+    </nav>
+
+    <div style="height: 80px;"></div>
+    
+    <header class="Header" id="12"></header>
+
+    <main>
+<section id="create-section" class="create-section">
+            <div class="container">
+                <h1 style="margin-bottom: 20px;">Host Your Own Event</h1>
+               <div class="add-event-wrapper">
+                    <a href="event-form.html" class="add-event-card" id="openModalBtn" style="text-decoration: none; color: inherit; cursor: pointer;">
+                        <div class="icon-plus">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h3>Create New Event</h3>
+                        <p>Click here to fill the form</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="created-events-section" class="events-display">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 10px;">Your Created Events</h2>
+                <hr class="separator-line">
+                
+                <div id="noEventsMessage" class="no-events-container" style="display: none;">
+                    <img src="https://via.placeholder.com/120/e0e0e0/808080?text=Empty+State+Logo" alt="No Events Found" class="no-events-img">
+                    <h3>No Events Created Yet</h3>
+                    <p>Looks like you haven't organized any events. Fill out the form above to get started!</p>
+                </div>
+                
+                <div id="createdEventsGrid" class="events-grid"></div>
+
+                <div id="noResults" class="no-results">
+                    <i class="fas fa-folder-open"></i>
+                    <p>No events created yet.</p>
+                </div>
+            </div>
+        </section>
+        
+      <section class="control-flow-section" id="11">
+            <div class="flow-container">
+                <h2 class="section-title">User Control Flow</h2>
+                <hr class="separator-line">
+
+                <div class="flow-cards-wrapper">
+                    <div class="flow-card">
+                        <div class="icon-box-flow"><i class="fas fa-plus-circle"></i></div>
+                        <div class="text-content">
+                            <h3>1. Create Events Section</h3>
+                            <p>User can create events on the Eventify in the 'Find Events' page.</p>
+                        </div>
+                    </div>
+                    <div class="flow-card">
+                        <div class="icon-box-flow"><i class="fa-solid fa-clipboard-list"></i></div>
+                        <div class="text-content">
+                            <h3>2. Create Event Form</h3>
+                            <p>Fill the Create Event Form, after filling the form your event will be hosted on 'Eventify'.You can view the card of your event in the Your Created Events section.</p>
+                        </div>
+                    </div>
+                    <div class="flow-card">
+                        <div class="icon-box-flow"><i class="fa-solid fa-bell"></i></div>
+                        <div class="text-content">
+                            <h3>3. Alerts</h3>
+                            <p>Your event will be hosted on the 'Find Events' page, where interested users can click the 'Register' button to join. As a host, you can keep a track of all interested users.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <section class="faq-section" id="faq-section">
+          <div class="faq-container-wide">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <hr class="separator-line">
+            <div class="faq-wrapper">
+              <div class="faq-item">
+                <button class="faq-question">
+                  <span>Is there a fee to host an event?</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>No. Eventify is a community-driven initiative. Listings are free to encourage social impact and student participation.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question">
+                  <span>How can I boost my event's visibility?</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>Your event gains instant visibility on our platform. Share your link to maximize this exposure.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question">
+                  <span>Is there a limit on hosting events?</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>No. You are free to host unlimited events to engage with the community frequently.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question">
+                  <span>Do I need to upload an image?</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>Yes. With limited text, a descriptive image visually explains your event purpose and theme instantly.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+    </main>
+
+   <footer class="footer-section" id="about-section">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="single-cta">
+                    <div class="cta-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="cta-text">
+                        <span>ABC Chowk Pune City</span>
+                        <strong>Maharashtra, India</strong>
+                    </div>
+                </div>
+                <div class="single-cta">
+                    <div class="cta-icon"><i class="fas fa-phone"></i></div>
+                    <div class="cta-text">
+                        <strong>+91 84355 12345</strong>
+                    </div>
+                </div>
+                <div class="single-cta">
+                    <div class="cta-icon"><i class="fas fa-envelope-open"></i></div>
+                    <div class="cta-text">
+                        <a href="mailto:support@company.com">support@company.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-widget">
+                    <div class="footer-heading">
+                        <h3>About the company</h3>
+                    </div>
+                    <div class="footer-text">
+                        <p>Our website is a centralized platform that showcases campaigns and events related to Cleanliness, Hackathons, Social Awareness, and Health. Users receive personalized notifications based on interests.</p>
+                    </div>
+                    <div class="footer-social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61586509943733" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/eventifypage/" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/eventify1" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/resources/events" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <div id="imageModal" class="modal-zoom">
+        <span class="close-modal">&times;</span>
+        <img class="modal-zoom-content" id="fullImage">
+        <div id="caption" style="text-align: center; color: #ccc; padding: 10px; height: 150px;"></div>
+    </div>
+  
+    <script src="../js/create-event.js"></script> 
+</body>
+</html>

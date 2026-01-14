@@ -1,0 +1,149 @@
+/* --- Variables & Reset --- */
+:root {
+  --primary: #4a90e2;
+  --primary-light: #7ab8f5;
+  --primary-dark: #2a64b7;
+  --bg-gradient: linear-gradient(135deg, #e0f0ff 0%, #a8d0ff 100%);
+  --text-primary: #2c3e50;
+  --text-secondary: #637381;
+  --success-bg: #dcfce7;
+  --success-text: #166534;
+  --error-bg: #fee2e2;
+  --error-text: #991b1b;
+}
+
+body {
+  margin: 0; padding: 0;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-primary);
+}
+
+/* --- Container --- */
+.container {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(74, 144, 226, 0.3);
+  width: 420px; max-width: 95vw;
+  padding: 40px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+h2 {
+  margin-bottom: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* --- Status Messages --- */
+.status-message {
+  margin-bottom: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  display: none;
+  font-weight: 500;
+}
+.status-error { background: var(--error-bg); color: var(--error-text); border: 1px solid #fca5a5; }
+.status-success { background: var(--success-bg); color: var(--success-text); border: 1px solid #86efac; }
+
+/* --- Forms & Inputs --- */
+.form_box { display: none; animation: fadeIn 0.4s ease-in-out; }
+.form_box.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.input_box { position: relative; margin-bottom: 20px; }
+
+.input_box input {
+  width: 100%; padding: 14px 14px 14px 44px;
+  border: 2px solid #eef1f6;
+  border-radius: 10px;
+  outline: none; font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+}
+
+.input_box input:focus {
+  border-color: var(--primary);
+  background: #f8fbff;
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+}
+
+.input_box i {
+  position: absolute; left: 16px; top: 50%;
+  transform: translateY(-50%);
+  color: #b0b8c4;
+  transition: color 0.3s;
+}
+
+.input_box input:focus + i { color: var(--primary); }
+
+/* --- Buttons --- */
+button.submit-btn {
+  width: 100%; padding: 14px;
+  border: none; border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white; font-size: 1.1em; font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+  transition: transform 0.2s, filter 0.2s;
+}
+
+button.submit-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+button.submit-btn:active { transform: translateY(0); }
+
+/* --- Links & Toggles --- */
+.toggle-link { margin-top: 15px; font-size: 0.95em; color: var(--text-secondary); }
+.toggle-link a { color: var(--primary); text-decoration: none; font-weight: 600; cursor: pointer; }
+.toggle-link a:hover { text-decoration: underline; }
+
+#dashboard-link-container { margin-top: 20px; display: none; }
+.dashboard-link {
+  display: inline-block; text-decoration: none;
+  background: #10b981; color: white;
+  padding: 12px 24px; border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* --- Google Auth --- */
+.google-auth-container { margin-top: 30px; }
+
+.separator-or {
+  display: flex; align-items: center;
+  color: #9aa5b1; margin-bottom: 20px;
+}
+.separator-or::before, .separator-or::after {
+  content: ''; flex: 1; border-bottom: 1px solid #eef1f6;
+}
+.separator-or span { padding: 0 16px; font-size: 0.85em; font-weight: 600; letter-spacing: 0.5px; }
+
+.google-btn {
+  width: 100%; display: flex; align-items: center; justify-content: center;
+  padding: 12px; background: white;
+  border: 2px solid #eef1f6;
+  border-radius: 10px; cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary); font-size: 1rem; font-weight: 600;
+  box-sizing: border-box; font-family: inherit;
+}
+
+.google-btn:hover {
+  background-color: #f8faff; border-color: #d1d9e6;
+  transform: translateY(-1px);
+}
+
+.google-btn img { width: 22px; height: 22px; margin-right: 12px; }

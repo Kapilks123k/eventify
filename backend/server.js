@@ -10,7 +10,8 @@ const path = require('path');
 const fs = require('fs');
 const session = require('express-session');
 const passport = require('passport');
-const MongoStore = require('connect-mongo');
+const MongoStoreRaw = require('connect-mongo');
+const MongoStore = MongoStoreRaw.default || MongoStoreRaw;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // Import Models

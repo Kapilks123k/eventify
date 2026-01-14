@@ -28,10 +28,19 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 const app = express();
+<<<<<<< HEAD
 const PORT = process.env.PORT || 3000;
 const BASE_URL = process.env.NODE_ENV === 'production' 
   ? 'https://eventify-3iu8.onrender.com' 
   : `http://localhost:${PORT}`;
+=======
+// Use Render's provided port, or default to 10000 (Render's default)
+const PORT = process.env.PORT || 10000;
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+>>>>>>> f8787a4493e57db3ae77856787d3bf4ec7c2726b
 
 // --- Registration Schema ---
 const registrationSchema = new mongoose.Schema({
@@ -71,12 +80,19 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project_1
     console.log('⚠️  Starting server without database connection');
   });
 
+<<<<<<< HEAD
 // --- UPDATED: PASSPORT CONFIGURATION (GOOGLE) ---
+=======
+>>>>>>> f8787a4493e57db3ae77856787d3bf4ec7c2726b
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,      
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,                                        
+<<<<<<< HEAD
     callbackURL: process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`,
+=======
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://https://eventify-3iu8.onrender.com/auth/google/callback",
+>>>>>>> f8787a4493e57db3ae77856787d3bf4ec7c2726b
     passReqToCallback: true 
   },
   async (req, accessToken, refreshToken, profile, done) => {
@@ -172,7 +188,11 @@ app.get('/auth/google', (req, res, next) => {
     // Check if Google OAuth is properly configured
     const cid = process.env.GOOGLE_CLIENT_ID;
     const csec = process.env.GOOGLE_CLIENT_SECRET;
+<<<<<<< HEAD
     const cb = process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`;
+=======
+    const cb = process.env.GOOGLE_CALLBACK_URL || "https://eventify-3iu8.onrender.com/auth/google/callback";
+>>>>>>> f8787a4493e57db3ae77856787d3bf4ec7c2726b
 
     const missingCreds = !cid || !csec;
     const placeholderCreds = (cid || '').includes('your_google_client_id_here') || (csec || '').includes('your_google_client_secret_here');
@@ -513,6 +533,10 @@ app.get('*', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
+<<<<<<< HEAD
 app.listen(PORT, () => {
   console.log(`🚀 Server running on ${BASE_URL}`);
 });
+=======
+
+>>>>>>> f8787a4493e57db3ae77856787d3bf4ec7c2726b

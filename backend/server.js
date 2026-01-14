@@ -36,6 +36,12 @@ const BASE_URL = (process.env.NODE_ENV === 'production' || process.env.RENDER_SE
   ? 'https://eventify-3iu8.onrender.com' 
   : `http://localhost:${PORT}`;
 
+// --- SAFETY CHECK: Render Environment ---
+if (process.env.RENDER_SERVICE_ID && !process.env.MONGODB_URI) {
+    console.error("🚨 CRITICAL ERROR: MONGODB_URI is missing in Render Environment Variables.");
+    console.error("   The app is trying to connect to localhost, which will fail/hang. Please add MONGODB_URI in Render Dashboard.");
+}
+
 // --- Registration Schema ---
 const registrationSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

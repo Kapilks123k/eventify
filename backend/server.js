@@ -76,6 +76,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project_1
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   let callbackURL = process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`;
 
+  console.log(`🔹 Google OAuth Callback URL: ${callbackURL}`);
+
   // Safety Check: If running on Render but callback is set to localhost (common config error), fix it.
   if (process.env.RENDER_SERVICE_ID && callbackURL.includes('localhost')) {
       console.log("⚠️  Detected localhost callback in production. Switching to auto-generated production URL.");

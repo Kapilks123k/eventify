@@ -539,6 +539,6 @@ app.use((err, req, res, next) => {
   res.redirect('/pages/login-admin.html?error=server_error');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on ${BASE_URL}`);
 });

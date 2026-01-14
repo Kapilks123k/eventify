@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const statusMsg = document.getElementById('status-message');
-  const googleBtn = document.getElementById('btn-google');
 
   // --- Helper Functions ---
   
@@ -112,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (error) {
       console.error('Login Error:', error);
-      showMessage('Server error. Please try again later.', 'error');
+      showMessage('Connection failed. Please check your internet or try again.', 'error');
     }
   });
   }
@@ -177,18 +176,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- 3. GOOGLE OAUTH REDIRECT ---
-  if (googleBtn) {
-  googleBtn.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent following any hardcoded href in the HTML
-    // Redirects to the backend Passport route
-    const urlParams = new URLSearchParams(window.location.search);
-    const redirectParam = urlParams.get('redirect');
-    
-    let authUrl = '/auth/google';
-    if (redirectParam && redirectParam.includes('create-event')) {
-        authUrl += '?origin=admin_page';
-    }
-    window.location.href = authUrl;
+  // Updated: Select by ID, Class, or Href to ensure we catch the button on all pages
+  const googleBtns = document.querySelectorAll('#btn-google, .google-btn, a[href*="/auth/google"]');
+  
+  googleBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent following any hardcoded href in the HTML
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectParam = urlParams.get('redirect');
+        
+        let authUrl = '/auth/google';
+        if (redirectParam && redirectParam.includes('create-event')) {
+            authUrl += '?origin=admin_page';
+        }
+        window.location.href = authUrl;
+      });
   });
-  }
 });

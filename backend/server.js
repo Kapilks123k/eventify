@@ -115,6 +115,15 @@ passport.use(new GoogleStrategy({
   },
   async (req, accessToken, refreshToken, profile, done) => {
     try {
+      // Validation: Ensure we have the necessary profile data
+      if (!profile || !profile.emails || !profile.emails.length) {
+          return done(new Error("No email found in Google profile"), null);
+      }
+
+      const email = profile.emails[0].value;
+      // Fallback: If displayName is missing, use the part of email before '@'
+      const displayName = profile.displayName || email.split('@')[0];
+
       // 1. Try to find user by Google ID
       let user = await User.findOne({ googleId: profile.id });
       
@@ -126,7 +135,7 @@ passport.use(new GoogleStrategy({
           }
       } else {
         // 2. Check if user exists by Email (Account Merging)
-        user = await User.findOne({ email: profile.emails[0].value });
+        user = await User.findOne({ email: email });
         
         if (user) {
             user.googleId = profile.id;
@@ -135,8 +144,8 @@ passport.use(new GoogleStrategy({
         } else {
             // 3. New User Creation - ALWAYS ADMIN
             user = new User({
-                username: profile.displayName,
-                email: profile.emails[0].value,
+                username: displayName,
+                email: email,
                 googleId: profile.id,
                 password: "", 
                 role: 'admin', // Force Admin

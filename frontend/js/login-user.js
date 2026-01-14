@@ -71,7 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await fetch('/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
         body: JSON.stringify({ email, password, redirectUrl: redirectParam })
       });
 
@@ -121,7 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await fetch('/signup', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
         body: JSON.stringify({ username, email, password })
       });
 

@@ -531,7 +531,7 @@ app.use((err, req, res, next) => {
   console.error("🔥 Global Error:", err);
   
   // If API request, return JSON
-  if (req.path.startsWith('/api') || req.xhr || (req.headers.accept && req.headers.accept.includes('json'))) {
+  if (req.path.startsWith('/api') || req.path === '/login' || req.path === '/signup' || req.xhr || (req.headers.accept && req.headers.accept.includes('json'))) {
       return res.status(500).json({ success: false, message: "Internal Server Error" });
   }
   

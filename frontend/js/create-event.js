@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // URL Generation
         const calendarUrl = generateCalendarUrl(event);
-        const mapsLink = `http://maps.google.com/?q=${encodeURIComponent(event.address)}`;
+        const mapsLink = `https://maps.google.com/?q=${encodeURIComponent(event.address)}`;
         
         // Category Formatting
         let rawCategory = event.category || 'Other';

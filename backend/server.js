@@ -207,6 +207,7 @@ app.get('/auth/google', (req, res, next) => {
     }
     
     const origin = req.query.origin || 'home';
+    console.log(`🔹 Google Auth started. Origin: ${origin}`);
     passport.authenticate('google', { 
         scope: ['profile', 'email'],
         state: origin // Pass origin as 'state' to Google

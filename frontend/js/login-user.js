@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
           const text = await response.text();
           console.error("Server returned non-JSON response:", text);
-          throw new Error("Server returned an error page instead of JSON.");
+          throw new Error("Server returned an error (HTML) instead of JSON. The server might be down or crashing.");
       }
 
       if (response.ok && data.success) {
@@ -187,20 +187,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 3. GOOGLE OAUTH REDIRECT ---
   // USE EVENT DELEGATION: Catches clicks on ANY Google link/button, even if IDs mismatch
   document.body.addEventListener('click', (e) => {
-      // Find the closest anchor or button that looks like a Google login
-      const target = e.target.closest('#btn-google, .google-btn, a[href*="/auth/google"], a[href*="google"]');
+      // Find the closest anchor or button
+      const target = e.target.closest('a, button');
       
       if (target) {
-          e.preventDefault(); // STOP the browser from going to localhost
-          
-          const urlParams = new URLSearchParams(window.location.search);
-          const redirectParam = urlParams.get('redirect');
-          
-          let authUrl = '/auth/google';
-          if (redirectParam && redirectParam.includes('create-event')) {
-              authUrl += '?origin=admin_page';
+          const href = target.getAttribute('href') || '';
+          const text = target.innerText || '';
+
+          // Check if it's a Google login button (by Href or Text)
+          if (href.includes('google') || text.toLowerCase().includes('google')) {
+              e.preventDefault(); // STOP the browser from going to localhost
+              
+              const urlParams = new URLSearchParams(window.location.search);
+              const redirectParam = urlParams.get('redirect');
+              
+              let authUrl = '/auth/google';
+              if (redirectParam && redirectParam.includes('create-event')) {
+                  authUrl += '?origin=admin_page';
+              }
+              window.location.href = authUrl;
           }
-          window.location.href = authUrl;
       }
   });
 });

@@ -57,6 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value.trim();
 
+    // Capture redirect URL from query parameters (e.g., ?redirect=/pages/create-event.html)
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectParam = urlParams.get('redirect');
+
     if (!email || !password) {
       showMessage('Please enter both email and password.', 'error');
       return;
@@ -68,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch('/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password, redirectUrl: redirectParam })
       });
 
       const data = await response.json();
@@ -83,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         setTimeout(() => {
-          window.location.href = '/pages/find-events.html';
+          window.location.href = data.redirectUrl || '/pages/find-events.html';
         }, 1000);
       } else {
         showMessage(data.message || 'Login failed', 'error');

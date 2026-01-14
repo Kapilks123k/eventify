@@ -243,19 +243,23 @@ app.post('/login', async (req, res, next) => {
     req.login(user, async (err) => {
         if (err) return next(err);
 
-        // Force Admin Role in Session (and DB if needed)
-        if (user.role !== 'admin') {
-            user.role = 'admin';
-            await user.save();
-        }
+        try {
+            // Force Admin Role in Session (and DB if needed)
+            if (user.role !== 'admin') {
+                user.role = 'admin';
+                await user.save();
+            }
 
-        // Return success. Frontend handles the redirect logic based on where the user is.
-        return res.json({ 
-            success: true, 
-            message: 'Login successful!', 
-            user: { username: user.username, role: 'admin' },
-            redirectUrl: redirectUrl || '/pages/find-events.html'
-        });
+            // Return success. Frontend handles the redirect logic based on where the user is.
+            return res.json({ 
+                success: true, 
+                message: 'Login successful!', 
+                user: { username: user.username, role: 'admin' },
+                redirectUrl: redirectUrl || '/pages/find-events.html'
+            });
+        } catch (saveError) {
+            return next(saveError);
+        }
     });
 
   } catch (error) {

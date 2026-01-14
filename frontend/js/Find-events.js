@@ -204,24 +204,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             const pad = (n) => n < 10 ? '0' + n : n;
             startDateTime = `${dateObj.getFullYear()}${pad(dateObj.getMonth() + 1)}${pad(dateObj.getDate())}T${pad(dateObj.getHours())}${pad(dateObj.getMinutes())}00`;
+            
+            // End time (1 hour later)
+            dateObj.setHours(dateObj.getHours() + 1);
+            endDateTime = `${dateObj.getFullYear()}${pad(dateObj.getMonth() + 1)}${pad(dateObj.getDate())}T${pad(dateObj.getHours())}${pad(dateObj.getMinutes())}00`;
         } catch (e) {
             alert("Could not read event date.");
             return;
         }
         
-        // End time (1 hour later)
-        const endDate = new Date(startDateTime.replace(/T(\d{6})/, (match, time) => {
-            const hours = parseInt(time.substring(0, 2));
-            const minutes = time.substring(2, 4);
-            const seconds = time.substring(4, 6);
-            const endHours = (hours + 1) % 24;
-            return `T${String(endHours).padStart(2, '0')}${minutes}${seconds}`;
-        }));
-        
-        const pad = (n) => n < 10 ? '0' + n : n;
-        const endDateTime = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
-        
-        const calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startDateTime}/${endDateTime}&ctz=Asia/Kolkata`;
+        // Extract Location
+        const locationEl = card.querySelector('.card-location a') || card.querySelector('.card-location');
+        const location = locationEl ? locationEl.innerText.trim() : '';
+
+        const calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&location=${encodeURIComponent(location)}&dates=${startDateTime}/${endDateTime}&ctz=Asia/Kolkata`;
         window.open(calendarUrl, '_blank');
     };
 
@@ -509,12 +505,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         card.setAttribute('data-location', event.city ? event.city.trim() : 'Unknown');
 
         // Normalize media paths to be web-accessible
-        let imgSrc = toWebPath(event.imagePath) || 'https://via.placeholder.com/400x200?text=Event+Image';
+        let imgSrc = toWebPath(event.imagePath) || 'https://placehold.co/400x200?text=Event+Image';
         let pdfSrc = toWebPath(event.brochurePath) || '#';
 
         card.innerHTML = `
             <div class="card-image">
-                <img src="${imgSrc}" alt="${event.eventName}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+                <img src="${imgSrc}" alt="${event.eventName}" onerror="this.onerror=null;this.src='https://placehold.co/400x200?text=Image+Not+Found'">
                 <span class="badge" style="text-transform: none;">${displayCategory}</span>
                 <button class="zoom-btn"><i class="fas fa-expand"></i></button>
             </div>

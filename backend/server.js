@@ -77,7 +77,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project_1
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,      
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,                                        
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/callback",
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || "https://eventify-3iu8.onrender.com/auth/google/callback",
     passReqToCallback: true 
   },
   async (req, accessToken, refreshToken, profile, done) => {
@@ -170,7 +170,7 @@ app.get('/auth/google', (req, res, next) => {
     // Check if Google OAuth is properly configured
     const cid = process.env.GOOGLE_CLIENT_ID;
     const csec = process.env.GOOGLE_CLIENT_SECRET;
-    const cb = process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/callback";
+    const cb = process.env.GOOGLE_CALLBACK_URL || "https://eventify-3iu8.onrender.com/auth/google/callback";
 
     const missingCreds = !cid || !csec;
     const placeholderCreds = (cid || '').includes('your_google_client_id_here') || (csec || '').includes('your_google_client_secret_here');

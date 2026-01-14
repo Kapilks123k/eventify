@@ -28,10 +28,11 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// Use Render's provided port, or default to 10000 (Render's default)
+const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
 // --- Registration Schema ---

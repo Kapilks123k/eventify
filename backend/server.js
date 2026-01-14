@@ -97,6 +97,14 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project_1
 
 // --- UPDATED: PASSPORT CONFIGURATION (GOOGLE) ---
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  // Helper to clean credentials (remove quotes if user pasted them in Render)
+  const cleanCreds = (str) => str ? str.replace(/["']/g, '').trim() : '';
+
+  const clientID = cleanCreds(process.env.GOOGLE_CLIENT_ID);
+  const clientSecret = cleanCreds(process.env.GOOGLE_CLIENT_SECRET);
+
+  console.log(`🔹 Google Client ID loaded: ${clientID.substring(0, 15)}...`);
+
   let callbackURL = process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`;
 
   console.log(`🔹 Google OAuth Callback URL: ${callbackURL}`);
@@ -108,8 +116,8 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   }
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID.trim(),      
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET.trim(),                                        
+    clientID: clientID,      
+    clientSecret: clientSecret,                                        
     callbackURL: callbackURL,
     passReqToCallback: true 
   },

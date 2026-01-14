@@ -56,8 +56,8 @@ const Registration = mongoose.model('Registration', registrationSchema);
 const cleanupExpiredEvents = async () => {
     try {
         const now = new Date();
-        // Delete events 1 minute (60000ms) after their scheduled time
-        const cutoff = new Date(now.getTime() - 60000);
+        // Delete events 20 seconds (20000ms) after their scheduled time (Active Cleanup)
+        const cutoff = new Date(now.getTime() - 20000);
         await Event.deleteMany({ eventDateTime: { $lte: cutoff } });
     } catch (err) {
         console.error("Error cleaning up expired events:", err);
@@ -483,9 +483,9 @@ app.post('/api/events', cpUpload, async (req, res) => {
         const rawDate = req.body.date || req.body.eventDate;
         const rawTime = req.body.time || req.body.eventTime;
         
-        // Create an ISO formatted string (YYYY-MM-DDTHH:MM) to ensure correct Date parsing
-        // This ensures the TTL index knows exactly when the event happens.
-        const combinedDateTime = new Date(`${rawDate}T${rawTime}:00`);
+        // Create an ISO formatted string (YYYY-MM-DDTHH:MM+05:30)
+        // We force IST (UTC+5:30) so the server (UTC) doesn't schedule it 5.5 hours in the future.
+        const combinedDateTime = new Date(`${rawDate}T${rawTime}:00+05:30`);
 
         // 2. Create Event Object (Updated)
         const newEvent = new Event({

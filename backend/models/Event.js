@@ -20,7 +20,7 @@ const eventSchema = new mongoose.Schema({
     eventDateTime: { 
         type: Date, 
         required: true, 
-        index: { expireAfterSeconds: 60 } 
+        index: { expireAfterSeconds: 20 } 
     },
 
     imagePath: { type: String, required: true },

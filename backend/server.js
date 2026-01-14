@@ -83,8 +83,8 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   }
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,      
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,                                        
+    clientID: process.env.GOOGLE_CLIENT_ID.trim(),      
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET.trim(),                                        
     callbackURL: callbackURL,
     passReqToCallback: true 
   },
@@ -244,6 +244,7 @@ app.get('/auth/google/callback',
 // --- MANUAL LOGIN ROUTE ---
 app.post('/login', async (req, res, next) => {
   try {
+    console.log("Login request received for:", req.body.email); // Debug log
     const { email, password, redirectUrl } = req.body;
     
     const user = await User.findOne({ email });

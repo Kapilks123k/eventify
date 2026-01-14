@@ -73,11 +73,11 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project_1
     console.log('⚠️  Starting server without database connection');
   });
 
-// --- UPDATED: PASSPORT CONFIGURATION (GOOGLE) ---
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,      
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,                                        
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || "https://eventify-3iu8.onrender.com/auth/google/callback",
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://https://eventify-3iu8.onrender.com/auth/google/callback",
     passReqToCallback: true 
   },
   async (req, accessToken, refreshToken, profile, done) => {
@@ -119,6 +119,9 @@ passport.use(new GoogleStrategy({
     }
   }
 ));
+} else {
+  console.log("⚠️  Google OAuth credentials missing. Google Login skipped.");
+}
 
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {

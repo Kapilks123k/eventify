@@ -56,7 +56,9 @@ const Registration = mongoose.model('Registration', registrationSchema);
 const cleanupExpiredEvents = async () => {
     try {
         const now = new Date();
-        await Event.deleteMany({ eventDateTime: { $lt: now } });
+        // Delete events 1 minute (60000ms) after their scheduled time
+        const cutoff = new Date(now.getTime() - 60000);
+        await Event.deleteMany({ eventDateTime: { $lt: cutoff } });
     } catch (err) {
         console.error("Error cleaning up expired events:", err);
     }

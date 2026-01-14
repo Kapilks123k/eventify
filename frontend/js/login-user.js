@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
               const redirectParam = urlParams.get('redirect');
               
               let authUrl = '/auth/google';
-              if (redirectParam && redirectParam.includes('create-event')) {
+              if (window.location.pathname.includes('login-admin.html') || (redirectParam && redirectParam.includes('create-event'))) {
                   authUrl += '?origin=admin_page';
               }
               window.location.href = authUrl;

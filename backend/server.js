@@ -10,6 +10,7 @@ const path = require('path');
 const fs = require('fs');
 const session = require('express-session');
 const passport = require('passport');
+const MongoStore = require('connect-mongo');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // Import Models
@@ -54,6 +55,9 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'your_secret_key', 
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project_1'
+  }),
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
 

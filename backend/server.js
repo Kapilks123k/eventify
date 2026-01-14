@@ -255,34 +255,40 @@ app.get('/auth/google', (req, res, next) => {
 });
 
 // 2. Google Callback Route
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { 
-    failureRedirect: '/pages/login-admin.html?error=google_auth_failed',
-    failureFlash: false 
-  }),
-  (req, res) => {
-    try {
+app.get('/auth/google/callback', (req, res, next) => {
+  passport.authenticate('google', (err, user, info) => {
+    if (err) {
+      console.error('Google OAuth Error:', err);
+      // Handle specific error codes
+      if (err.code === 'invalid_client' || err.message === 'invalid_client') {
+         return res.redirect('/pages/login-admin.html?error=oauth_invalid_client');
+      }
+      return res.redirect('/pages/login-admin.html?error=google_auth_failed');
+    }
+    
+    if (!user) {
+      return res.redirect('/pages/login-admin.html?error=google_auth_failed');
+    }
+
+    req.logIn(user, (loginErr) => {
+      if (loginErr) {
+        console.error('Login Error:', loginErr);
+        return res.redirect('/pages/login-admin.html?error=server_error');
+      }
+
       // Retrieve the origin from the 'state' query param
       const origin = req.query.state;
 
-      // Case 1: Login from Admin Page -> Redirect to Create Event
       if (origin === 'admin_page') {
           res.redirect('/pages/create-event.html');
-      } 
-      // Case 2: Login from Find Events Modal -> Stay on Find Events + Alert Param
-      else if (origin === 'find_events') {
+      } else if (origin === 'find_events') {
           res.redirect('/pages/find-events.html?login_success=true');
-      } 
-      // Default Fallback
-      else {
+      } else {
           res.redirect('/pages/find-events.html');
       }
-    } catch (error) {
-      console.error('OAuth callback error:', error);
-      res.redirect('/pages/login-admin.html?error=callback_failed');
-    }
-  }
-);
+    });
+  })(req, res, next);
+});
 
 // --- MANUAL LOGIN ROUTE ---
 app.post('/login', async (req, res, next) => {

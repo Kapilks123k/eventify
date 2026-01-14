@@ -17,6 +17,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const statusMsg = document.getElementById('status-message');
 
+  // --- NEW: Handle URL Error Params ---
+  const urlParams = new URLSearchParams(window.location.search);
+  const errorParam = urlParams.get('error');
+  if (errorParam && statusMsg) {
+      let msg = "Login failed.";
+      if (errorParam === 'server_error') msg = "Server error during login. Please try again.";
+      else if (errorParam === 'google_auth_failed') msg = "Google authentication failed.";
+      else if (errorParam === 'oauth_not_configured') msg = "Google Login is not configured.";
+      else if (errorParam === 'callback_failed') msg = "Login callback failed.";
+      
+      statusMsg.textContent = msg;
+      statusMsg.className = 'status-message status-error';
+      statusMsg.style.display = 'block';
+      
+      // Clean URL so the error doesn't persist on refresh
+      window.history.replaceState({}, document.title, window.location.pathname);
+  }
+
   // --- Helper Functions ---
   
   function switchView(viewName) {

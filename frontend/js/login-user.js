@@ -150,7 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- 3. GOOGLE OAUTH REDIRECT ---
-  googleBtn.addEventListener('click', () => {
+  googleBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent following any hardcoded href in the HTML
     // Redirects to the backend Passport route
     const urlParams = new URLSearchParams(window.location.search);
     const redirectParam = urlParams.get('redirect');

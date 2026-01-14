@@ -805,7 +805,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // --- MODIFIED: Google Login Button ---
     if (googleBtn) {
-        googleBtn.addEventListener('click', () => {
+        googleBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent following any hardcoded href
             // [REMOVE OLD CODE] window.location.href = '/auth/google';
             
             // [ADD THIS NEW CODE]

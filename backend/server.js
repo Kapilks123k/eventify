@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // --- Registration Schema ---
 const registrationSchema = new mongoose.Schema({
@@ -497,6 +497,14 @@ app.delete('/api/events/:id', async (req, res) => {
     }
 });
 
+
+// Catch-all route to serve the frontend for non-API/Auth/Uploads routes
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/auth') || req.path.startsWith('/uploads')) {
+    return next();
+  }
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

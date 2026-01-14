@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         
         // Convert to proper date format for Google Calendar
-        let startDateTime;
+        let startDateTime, endDateTime;
         try {
             // Try parsing the date string
             const dateObj = new Date(dateStr + ' ' + timeStr);

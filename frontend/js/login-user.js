@@ -92,7 +92,16 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ email, password, redirectUrl: redirectParam })
       });
 
-      const data = await response.json();
+      // Check if response is actually JSON (handles 500/502 HTML error pages)
+      const contentType = response.headers.get("content-type");
+      let data;
+      if (contentType && contentType.includes("application/json")) {
+          data = await response.json();
+      } else {
+          const text = await response.text();
+          console.error("Server returned non-JSON response:", text);
+          throw new Error("Server returned an error page instead of JSON.");
+      }
 
       if (response.ok && data.success) {
         showMessage('Login successful! Redirecting...', 'success');
@@ -176,22 +185,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- 3. GOOGLE OAUTH REDIRECT ---
-  // Updated: Select by ID, Class, or Href to ensure we catch the button on all pages
-  // We also look for any link containing 'google' to be extra safe against hardcoded localhost links
-  const googleBtns = document.querySelectorAll('#btn-google, .google-btn, a[href*="/auth/google"], a[href*="google"]');
-  
-  googleBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent following any hardcoded href in the HTML
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirectParam = urlParams.get('redirect');
-        
-        let authUrl = '/auth/google';
-        if (redirectParam && redirectParam.includes('create-event')) {
-            authUrl += '?origin=admin_page';
-        }
-        window.location.href = authUrl;
-      });
+  // USE EVENT DELEGATION: Catches clicks on ANY Google link/button, even if IDs mismatch
+  document.body.addEventListener('click', (e) => {
+      // Find the closest anchor or button that looks like a Google login
+      const target = e.target.closest('#btn-google, .google-btn, a[href*="/auth/google"], a[href*="google"]');
+      
+      if (target) {
+          e.preventDefault(); // STOP the browser from going to localhost
+          
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectParam = urlParams.get('redirect');
+          
+          let authUrl = '/auth/google';
+          if (redirectParam && redirectParam.includes('create-event')) {
+              authUrl += '?origin=admin_page';
+          }
+          window.location.href = authUrl;
+      }
   });
 });

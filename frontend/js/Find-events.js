@@ -804,16 +804,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 // --- MODIFIED: Google Login Button ---
-    if (googleBtn) {
-        googleBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent following any hardcoded href
-            // [REMOVE OLD CODE] window.location.href = '/auth/google';
-            
-            // [ADD THIS NEW CODE]
-            // Case 2: Pass 'find_events' so server knows to return here
-            window.location.href = '/auth/google?origin=find_events'; 
-        });
-    }
+    // Use Event Delegation for robustness
+    document.body.addEventListener('click', (e) => {
+        const target = e.target.closest('#modal-google-btn');
+        if (target) {
+            e.preventDefault();
+            window.location.href = '/auth/google?origin=find_events';
+        }
+    });
     
     // --- MODIFIED: Google Login Return Logic ---
     const storedEventName = sessionStorage.getItem('pendingEventName');

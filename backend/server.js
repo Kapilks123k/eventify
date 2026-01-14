@@ -103,7 +103,9 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   const clientID = cleanCreds(process.env.GOOGLE_CLIENT_ID);
   const clientSecret = cleanCreds(process.env.GOOGLE_CLIENT_SECRET);
 
-  console.log(`🔹 Google Client ID loaded: ${clientID.substring(0, 15)}...`);
+  console.log("🔹 Google Auth Config Check:");
+  console.log(`   - Client ID: ${clientID ? clientID.substring(0, 15) + '...' : 'MISSING'} (Length: ${clientID ? clientID.length : 0})`);
+  console.log(`   - Client Secret: ${clientSecret ? clientSecret.substring(0, 5) + '...' : 'MISSING'} (Length: ${clientSecret ? clientSecret.length : 0})`);
 
   let callbackURL = process.env.GOOGLE_CALLBACK_URL || `${BASE_URL}/auth/google/callback`;
 

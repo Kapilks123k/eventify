@@ -256,12 +256,15 @@
             if (errorType === 'google_auth_failed') {
                 showMessage('Google Authentication failed. Please try again.', 'error');
             } else if (errorType === 'oauth_invalid_client') {
-                showMessage('Configuration Error: Invalid Google Client Secret. Check Render Environment Variables.', 'error');
+                showMessage('Configuration Error: Invalid Google Credentials (ID or Secret). Check Render Environment Variables.', 'error');
             } else if (errorType === 'conflict_active_session') {
                 showMessage('You are already logged in via manual/session. Please logout first.', 'error');
             } else if (errorType === 'conflict_google') {
                 showMessage('You are already logged in. Please logout first.', 'error');
             }
+
+            // Clean URL so the error doesn't persist on refresh
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
 
         // Auto-Redirect if Already Logged In
